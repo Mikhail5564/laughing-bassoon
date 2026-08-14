@@ -57,21 +57,28 @@
             gap: 25px;
         }
 
-        /* Карточка товара */
-        .product-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
+        /* Карточка товара — теперь это ссылка */
+        .product-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
             transition: all 0.3s ease;
+            border-radius: 15px;
+            background: #f8f9fa;
             border: 2px solid transparent;
-            position: relative;
         }
 
-        .product-card:hover {
+        .product-card-link:hover {
             transform: translateY(-5px);
             border-color: #667eea;
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
             background: white;
+        }
+
+        .product-card {
+            padding: 25px;
+            border-radius: 15px;
+            /* Внутренняя структура карточки без изменений */
         }
 
         .product-name {
@@ -159,6 +166,8 @@
             font-size: 16px;
             transition: all 0.3s ease;
             text-align: center;
+            border: none;
+            cursor: pointer;
         }
 
         .add-button:hover {
@@ -235,27 +244,29 @@
 
         <!-- Проверяем, есть ли товары -->
         {% if products %}
-            <!-- Сетка с карточками товаров -->
+            <!-- Сетка с карточками товаров (каждая — ссылка на отдельный товар) -->
             <div class="products-grid">
                 {% for product in products %}
-                    <div class="product-card">
-                        <!-- Название товара -->
-                        <div class="product-name">{{ product.name }}</div>
+                    <a href="{% url 'views_product' %}?name={{product.name}}" class="product-card-link">
+                        <div class="product-card">
+                            <!-- Название товара -->
+                            <div class="product-name">{{ product.name }}</div>
 
-                        <div class="product-info">
-                            <!-- Количество -->
-                            <div class="info-item">
-                                <span class="info-label">Количество</span>
-                                <span class="info-value quantity">{{ product.count }}</span>
-                            </div>
+                            <div class="product-info">
+                                <!-- Количество -->
+                                <div class="info-item">
+                                    <span class="info-label">Количество</span>
+                                    <span class="info-value quantity">{{ product.count }}</span>
+                                </div>
 
-                            <!-- Цена -->
-                            <div class="info-item">
-                                <span class="info-label">Цена</span>
-                                <span class="info-value price">{{ product.price }}</span>
+                                <!-- Цена -->
+                                <div class="info-item">
+                                    <span class="info-label">Цена</span>
+                                    <span class="info-value price">{{ product.price }}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 {% endfor %}
             </div>
         {% else %}
@@ -267,7 +278,7 @@
             </div>
         {% endif %}
 
-        <!-- Кнопка для добавления товара (опционально) -->
+        <!-- Кнопка для добавления товара -->
         <div class="text-center">
             <a href="{% url 'create_product' %}" class="add-button">
                 ➕ Добавить товар
@@ -275,11 +286,10 @@
         </div>
     </div>
 
-    <!-- Скрипт для динамического обновления количества -->
+    <!-- Скрипт для анимации появления карточек -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Можно добавить анимацию при загрузке
-            const cards = document.querySelectorAll('.product-card');
+            const cards = document.querySelectorAll('.product-card-link');
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(20px)';

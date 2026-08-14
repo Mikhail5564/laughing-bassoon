@@ -15,3 +15,12 @@ def create_product(request):
 
 def views_products(request):
     return render(request, 'views.html' , context={'products': products})
+
+
+def views_product(request):
+    name = request.GET.get('name')
+    for item in products:
+        if name == item.name:
+            res = item
+            break
+    return render(request, 'view_product.html', context={'product': res})
