@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор Django</title>
+    <!-- Подключаем шрифты Google Fonts для красивого текста -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <!-- Font Awesome для иконок действий -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f7f9fc 0%, #e6ecf5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px;
+            box-shadow: 0 30px 60px rgba(0, 20, 40, 0.15), 0 10px 25px rgba(0, 0, 0, 0.05);
+            padding: 40px 35px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: transform 0.25s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-4px);
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0b1e33;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        h1 i {
+            color: #3b7cff;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            color: #4a5a72;
+            font-size: 14px;
+            font-weight: 400;
+            margin-left: 42px;
+            margin-bottom: 30px;
+            border-left: 3px solid #3b7cff;
+            padding-left: 16px;
+            opacity: 0.8;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            font-size: 14px;
+            color: #1f3349;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #3b7cff;
+            width: 18px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1.5px solid #dae0e9;
+            border-radius: 18px;
+            transition: all 0.25s ease;
+            color: #0b1e33;
+            font-weight: 500;
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
+        }
+
+        .form-control:focus {
+            border-color: #3b7cff;
+            background: #ffffff;
+            box-shadow: 0 0 0 5px rgba(59, 124, 255, 0.15), inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .form-control::placeholder {
+            color: #a0b0c6;
+            font-weight: 400;
+            opacity: 0.7;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 18px 0 10px 0;
+        }
+
+        .action-option {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .action-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .action-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 14px 0;
+            background: #f2f6fd;
+            border: 1.5px solid #dae0e9;
+            border-radius: 20px;
+            font-size: 22px;
+            font-weight: 600;
+            color: #1f3349;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .action-option input[type="radio"]:checked + label {
+            background: #3b7cff;
+            border-color: #3b7cff;
+            color: white;
+            box-shadow: 0 8px 18px rgba(59, 124, 255, 0.30);
+            transform: scale(1.02);
+        }
+
+        .action-option label:hover {
+            background: #e3ebf9;
+            border-color: #b6cae5;
+            transform: translateY(-2px);
+        }
+
+        .action-option input[type="radio"]:checked + label:hover {
+            background: #2f6beb;
+            transform: scale(1.02) translateY(-2px);
+        }
+
+        .action-option label i {
+            margin-right: 4px;
+            font-size: 18px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px 20px;
+            background: #0b1e33;
+            border: none;
+            border-radius: 60px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin-top: 18px;
+            letter-spacing: 0.3px;
+            box-shadow: 0 10px 25px rgba(11, 30, 51, 0.15);
+        }
+
+        .btn-submit i {
+            font-size: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            background: #142f4a;
+            transform: translateY(-3px);
+            box-shadow: 0 16px 35px rgba(11, 30, 51, 0.25);
+        }
+
+        .btn-submit:hover i {
+            transform: translateX(6px);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.97);
+        }
+
+        .result-box {
+            margin-top: 30px;
+            padding: 20px 24px;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+
+        .result-box .result-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #5b6f88;
+            font-weight: 600;
+        }
+
+        .result-box .result-value {
+            font-size: 38px;
+            font-weight: 700;
+            color: #0b1e33;
+            margin-top: 6px;
+            word-break: break-word;
+        }
+
+        .result-box .result-value .operator-symbol {
+            color: #3b7cff;
+            margin: 0 6px;
+        }
+
+        .error-message {
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: #ffe9e9;
+            border-radius: 24px;
+            color: #b33636;
+            font-weight: 500;
+            border-left: 5px solid #d43f3f;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+        }
+
+        .error-message i {
+            font-size: 20px;
+            color: #b33636;
+        }
+
+        .footer-note {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 13px;
+            color: #6f83a0;
+            letter-spacing: 0.3px;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            padding-top: 18px;
+        }
+
+        .footer-note i {
+            margin: 0 4px;
+            color: #3b7cff;
+        }
+
+        /* адаптив */
+        @media (max-width: 500px) {
+            .container {
+                padding: 28px 20px;
+                border-radius: 36px;
+            }
+            .action-grid {
+                gap: 6px;
+            }
+            .action-option label {
+                font-size: 18px;
+                padding: 12px 0;
+            }
+            .result-box .result-value {
+                font-size: 30px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <i class="fas fa-calculator"></i> Калькулятор
+        </h1>
+        <div class="subtitle">
+            введите числа и выберите действие
+        </div>
+
+        <!-- Форма отправляет данные методом POST на текущий URL (Django view) -->
+        <form method="post" action="">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="num1"><i class="fas fa-arrow-right"></i> Первое число</label>
+                <input type="number" step="any" class="form-control" id="num1" name="num1" placeholder="например, 12.5" value="{{ request.POST.num1 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="num2"><i class="fas fa-arrow-right"></i> Второе число</label>
+                <input type="number" step="any" class="form-control" id="num2" name="num2" placeholder="например, 7.2" value="{{ request.POST.num2 }}" required>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-bolt"></i> Действие</label>
+                <div class="action-grid">
+                    <div class="action-option">
+                        <input type="radio" id="action_add" name="action" value="+" {% if request.POST.action == '+' or not request.POST.action %}checked{% endif %}>
+                        <label for="action_add"><i class="fas fa-plus"></i> +</label>
+                    </div>
+                    <div class="action-option">
+                        <input type="radio" id="action_sub" name="action" value="-" {% if request.POST.action == '-' %}checked{% endif %}>
+                        <label for="action_sub"><i class="fas fa-minus"></i> −</label>
+                    </div>
+                    <div class="action-option">
+                        <input type="radio" id="action_mul" name="action" value="*" {% if request.POST.action == '*' %}checked{% endif %}>
+                        <label for="action_mul"><i class="fas fa-times"></i> ×</label>
+                    </div>
+                    <div class="action-option">
+                        <input type="radio" id="action_div" name="action" value="/" {% if request.POST.action == '/' %}checked{% endif %}>
+                        <label for="action_div"><i class="fas fa-divide"></i> ÷</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">
+                <span>Вычислить</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <!-- Блок результата -->
+        {% if result is not None %}
+            <div class="result-box">
+                <div class="result-label">Результат</div>
+                <div class="result-value">
+                    {{ request.POST.num1 }}
+                    <span class="operator-symbol">
+                        {% if request.POST.action == '+' %} +
+                        {% elif request.POST.action == '-' %} −
+                        {% elif request.POST.action == '*' %} ×
+                        {% elif request.POST.action == '/' %} ÷
+                        {% endif %}
+                    </span>
+                    {{ request.POST.num2 }}
+                    <span style="color:#1f3349; margin:0 6px;">=</span>
+                    <span style="color:#0b1e33;">{{ result }}</span>
+                </div>
+            </div>
+        {% elif error %}
+            <div class="error-message">
+                <i class="fas fa-circle-exclamation"></i>
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <div class="footer-note">
+            <i class="fas fa-rotate-left"></i> введите данные и нажмите «Вычислить»
+        </div>
+    </div>
+</body>
+</html>

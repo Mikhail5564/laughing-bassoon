@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список товаров</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .product-count {
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+
+        /* Сетка для карточек */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* Карточка товара */
+        .product-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            background: white;
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+
+        .info-label {
+            color: #888;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .info-value.quantity {
+            color: #667eea;
+        }
+
+        .info-value.price {
+            color: #27ae60;
+        }
+
+        .info-value.price::before {
+            content: '₽ ';
+            font-size: 14px;
+        }
+
+        /* Состояние "Нет товаров" */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .empty-state h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #888;
+            font-size: 18px;
+        }
+
+        /* Кнопка добавления */
+        .add-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .add-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .product-card {
+                padding: 20px;
+            }
+
+            .product-name {
+                font-size: 18px;
+            }
+
+            .info-value {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .product-card {
+                padding: 15px;
+            }
+
+            .info-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📦 Список товаров</h1>
+        <p class="subtitle">Управление товарами в вашем магазине</p>
+
+        <!-- Количество товаров -->
+        <div class="product-count">
+            Всего товаров: <span id="productCount">{{ products|length }}</span>
+        </div>
+
+        <!-- Проверяем, есть ли товары -->
+        {% if products %}
+            <!-- Сетка с карточками товаров -->
+            <div class="products-grid">
+                {% for product in products %}
+                    <div class="product-card">
+                        <!-- Название товара -->
+                        <div class="product-name">{{ product.name }}</div>
+
+                        <div class="product-info">
+                            <!-- Количество -->
+                            <div class="info-item">
+                                <span class="info-label">Количество</span>
+                                <span class="info-value quantity">{{ product.count }}</span>
+                            </div>
+
+                            <!-- Цена -->
+                            <div class="info-item">
+                                <span class="info-label">Цена</span>
+                                <span class="info-value price">{{ product.price }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Состояние, когда товаров нет -->
+            <div class="empty-state">
+                <span class="empty-icon">🛒</span>
+                <h2>Товаров пока нет</h2>
+                <p>Добавьте первый товар в ваш каталог</p>
+            </div>
+        {% endif %}
+
+        <!-- Кнопка для добавления товара (опционально) -->
+        <div class="text-center">
+            <a href="{% url 'create_product' %}" class="add-button">
+                ➕ Добавить товар
+            </a>
+        </div>
+    </div>
+
+    <!-- Скрипт для динамического обновления количества -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Можно добавить анимацию при загрузке
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * (index + 1));
+            });
+        });
+    </script>
+
+</body>
+</html>

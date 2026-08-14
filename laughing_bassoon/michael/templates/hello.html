@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <style>
+        /* Сброс стилей и базовые настройки */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Основной контейнер */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 50px 40px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Заголовок */
+        .title {
+            text-align: center;
+            color: #2d3748;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+        }
+
+        /* Сетка ссылок */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Стили для каждой ссылки-карточки */
+        .link-card {
+            display: block;
+            background: white;
+            padding: 25px 20px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .link-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #667eea;
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+            color: white;
+        }
+
+        .link-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Текст поверх градиента */
+        .link-card span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Иконки для ссылок (эмодзи) */
+        .link-card .icon {
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .link-card:hover .icon {
+            filter: brightness(10);
+        }
+
+        /* Дополнительная секция */
+        .extra-section {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid #e2e8f0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .extra-link {
+            color: #4a5568;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .extra-link:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 640px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .links-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .link-card {
+                padding: 18px 15px;
+                font-size: 1rem;
+            }
+
+            .link-card .icon {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">🚀 Добро пожаловать!</h1>
+        <p class="subtitle">Выберите сервис, который вас интересует</p>
+
+        <div class="links-grid">
+            <!-- Обязательные ссылки -->
+            <a href="{% url 'weather' %}" class="link-card">
+                <span class="icon">🌤️</span>
+                <span>Погода</span>
+            </a>
+
+            <a href="{% url 'converter' %}" class="link-card">
+                <span class="icon">💱</span>
+                <span>Конвертор валюты</span>
+            </a>
+
+            <a href="{% url 'views_products' %}" class="link-card">
+                <span class="icon">🛍️</span>
+                <span>Магазин</span>
+            </a>
+
+            <a href="{% url 'calculate' %}" class="link-card">
+                <span class="icon">🧮</span>
+                <span>Калькулятор</span>
+            </a>
+
+            <a href="{% url 'event' %}" class="link-card">
+                <span class="icon">📅</span>
+                <span>Эвенты (Мероприятия)</span>
+            </a>
+
+            <!-- Дополнительные ссылки -->
+            <a href="#" class="link-card">
+                <span class="icon">📝</span>
+                <span>Профиль</span>
+            </a>
+
+            <a href="" class="link-card">
+                <span class="icon">🖼️</span>
+                <span>Галерея</span>
+            </a>
+
+            <a href="" class="link-card">
+                <span class="icon">📧</span>
+                <span>Контакты</span>
+            </a>
+        </div>
+
+        <!-- Дополнительные ссылки внизу -->
+        <div class="extra-section">
+            <a href="" class="extra-link">О нас</a>
+            <a href="" class="extra-link">FAQ</a>
+            <a href="" class="extra-link">Поддержка</a>
+            <a href="" class="extra-link">Профиль</a>
+            <a href="" class="extra-link">Настройки</a>
+        </div>
+    </div>
+</body>
+</html>

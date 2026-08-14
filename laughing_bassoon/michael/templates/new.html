@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JoJo's Bizarre Template —豪华版</title>
+    <!-- Шрифты с характером -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Oswald:wght@400;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <style>
+        /* Глобальный сброс и фон с глубокой звёздной магией */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0b0510;
+            background-image:
+                radial-gradient(ellipse at 20% 50%, #2d1640 0%, #0a0310 70%),
+                radial-gradient(ellipse at 80% 20%, #1f0a2a 0%, #050108 80%);
+            font-family: 'Oswald', sans-serif;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Слой с золотыми звёздами (фирменный стиль) */
+        body::before {
+            content: '✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★';
+            position: absolute;
+            top: -10px;
+            left: -50px;
+            width: 200%;
+            font-size: 45px;
+            letter-spacing: 40px;
+            color: rgba(255, 215, 0, 0.07);
+            white-space: nowrap;
+            pointer-events: none;
+            transform: rotate(-5deg) scaleY(2.5);
+            text-shadow: 0 0 30px #ffaa00, 0 0 60px #b87c00;
+            z-index: 0;
+            animation: starDrift 30s linear infinite;
+        }
+
+        body::after {
+            content: '★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧ ★ ✦ ✧';
+            position: absolute;
+            bottom: -20px;
+            right: -50px;
+            width: 200%;
+            font-size: 35px;
+            letter-spacing: 50px;
+            color: rgba(255, 215, 0, 0.05);
+            white-space: nowrap;
+            pointer-events: none;
+            transform: rotate(3deg) scaleY(2.2);
+            z-index: 0;
+            animation: starDriftReverse 25s linear infinite;
+        }
+
+        @keyframes starDrift {
+            0% { transform: rotate(-5deg) scaleY(2.5) translateX(0); }
+            100% { transform: rotate(-5deg) scaleY(2.5) translateX(-50%); }
+        }
+
+        @keyframes starDriftReverse {
+            0% { transform: rotate(3deg) scaleY(2.2) translateX(0); }
+            100% { transform: rotate(3deg) scaleY(2.2) translateX(50%); }
+        }
+
+        /* ГЛАВНАЯ КАРТОЧКА — «ЗОЛОТОЙ СТЕНД» */
+        .golden-stand {
+            max-width: 1050px;
+            width: 100%;
+            background: linear-gradient(160deg, #1b0c21, #2c1438, #15091d);
+            padding: 50px 45px;
+            border-radius: 60px 12px 60px 12px;
+            box-shadow:
+                0 30px 60px rgba(0,0,0,0.9),
+                0 0 0 3px #b8860b,
+                0 0 0 8px #30163d,
+                0 0 60px rgba(255, 215, 0, 0.2);
+            border: 1px solid #e6b422;
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s ease;
+            animation: goldenPulse 4s infinite alternate;
+        }
+
+        @keyframes goldenPulse {
+            0% {
+                box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 0 3px #b8860b, 0 0 0 8px #30163d, 0 0 60px rgba(255, 215, 0, 0.2);
+            }
+            100% {
+                box-shadow: 0 30px 80px rgba(255, 215, 0, 0.2), 0 0 0 4px #ffd700, 0 0 0 12px #4a1f5a, 0 0 100px #ffb300;
+            }
+        }
+
+        /* Верхний декор — «коронная» линия */
+        .crown-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .crown-line .star-deco {
+            font-size: 2.8rem;
+            color: #f5c542;
+            filter: drop-shadow(0 0 20px #ffaa33);
+            animation: sparkle 2s infinite alternate;
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0.7; transform: scale(0.9) rotate(-10deg); }
+            100% { opacity: 1; transform: scale(1.2) rotate(10deg); }
+        }
+
+        .crown-line .sub-pose {
+            font-family: 'Bangers', cursive;
+            font-size: 1.6rem;
+            letter-spacing: 4px;
+            color: #f0d6b0;
+            background: rgba(0,0,0,0.6);
+            padding: 5px 30px;
+            border-radius: 40px;
+            border-left: 4px solid #f5c542;
+            border-right: 4px solid #f5c542;
+            backdrop-filter: blur(6px);
+            text-shadow: 0 0 10px #b8860b;
+            transform: skewX(-5deg);
+        }
+
+        /* ЗАГОЛОВОК — с «криком» и глитчем */
+        .jojo-master-title {
+            font-family: 'Bangers', cursive;
+            font-size: 5rem;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            color: #fae57a;
+            text-shadow:
+                6px 6px 0 #5e1f6e,
+                12px 12px 0 #1f0a26,
+                0 0 40px #ffb347,
+                0 0 80px #ff8800;
+            transform: skewX(-10deg) scaleY(1.1);
+            line-height: 1.1;
+            text-align: center;
+            margin: 5px 0 10px;
+            word-break: break-word;
+            animation: glitchGold 3s infinite;
+        }
+
+        @keyframes glitchGold {
+            0%, 85%, 100% { text-shadow: 6px 6px 0 #5e1f6e, 12px 12px 0 #1f0a26, 0 0 40px #ffb347, 0 0 80px #ff8800; }
+            90% { text-shadow: -4px -4px 0 #ff2d75, 8px 8px 0 #00e5ff, 0 0 60px #ffaa00, 0 0 100px #ff5500; }
+            93% { text-shadow: 6px -6px 0 #00e5ff, -6px 6px 0 #ff2d75, 0 0 70px #ffcc00, 0 0 120px #ff4400; }
+            96% { text-shadow: 6px 6px 0 #5e1f6e, 12px 12px 0 #1f0a26, 0 0 40px #ffb347, 0 0 80px #ff8800; }
+        }
+
+        .jojo-master-title span {
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .jojo-master-title span:hover {
+            transform: scale(1.2) rotate(5deg);
+            color: #ffe88a;
+        }
+
+        /* Манга-линия с бриллиантами */
+        .manga-diamond-line {
+            width: 100%;
+            height: 8px;
+            background: repeating-linear-gradient(90deg, #ffd700, #ffd700 20px, #8b2f97 20px, #8b2f97 40px, #ffd700 40px, #ffd700 60px);
+            margin: 20px 0 25px;
+            border-radius: 40px;
+            box-shadow: 0 0 25px #ffbb00, inset 0 0 10px #ffaa00;
+            position: relative;
+        }
+
+        .manga-diamond-line::after {
+            content: '◆ ◇ ◆ ◇ ◆ ◇';
+            position: absolute;
+            top: -18px;
+            right: 10px;
+            font-size: 24px;
+            color: #ffd700;
+            letter-spacing: 12px;
+            filter: drop-shadow(0 0 10px gold);
+            background: #1b0c21;
+            padding: 0 15px;
+        }
+
+        /* ОСНОВНОЙ КОНТЕНТ — шикарный */
+        .stand-content {
+            background: rgba(16, 5, 22, 0.75);
+            backdrop-filter: blur(8px);
+            padding: 35px 30px;
+            border-radius: 40px 8px 40px 8px;
+            margin: 25px 0 30px;
+            border: 1px solid #b8860b;
+            box-shadow: inset 0 0 50px rgba(255, 215, 0, 0.08), 0 10px 30px rgba(0,0,0,0.5);
+            color: #f2e3d0;
+            font-size: 1.25rem;
+            line-height: 1.7;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stand-content::before {
+            content: '✦';
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            font-size: 200px;
+            color: rgba(255, 215, 0, 0.03);
+            transform: rotate(15deg);
+        }
+
+        .stand-content .stand-icon-big {
+            display: inline-block;
+            background: linear-gradient(145deg, #2d0f3a, #15071c);
+            padding: 0 20px;
+            border-radius: 40px;
+            color: #ffd966;
+            font-weight: 700;
+            border: 3px solid #d4a017;
+            box-shadow: 0 0 30px #b8860b;
+            font-family: 'Bangers', cursive;
+            font-size: 2.2rem;
+            transform: rotate(-4deg) scale(1.1);
+            margin-right: 15px;
+            letter-spacing: 3px;
+        }
+
+        .highlight-gold {
+            color: #ffd966;
+            font-weight: 700;
+            text-shadow: 0 0 15px #ffaa33, 0 0 30px #ff8800;
+            background: linear-gradient(45deg, #2f1340, #160a1c);
+            padding: 0 15px;
+            border-radius: 20px;
+            border-bottom: 5px solid #f5c542;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+
+        .stand-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px 40px;
+            margin: 25px 0 10px;
+            padding: 15px 0;
+            border-top: 2px dotted #8b2f97;
+            border-bottom: 2px dotted #8b2f97;
+        }
+
+        .stand-stats div {
+            font-family: 'Bangers', cursive;
+            font-size: 1.4rem;
+            color: #e6cfa0;
+            letter-spacing: 2px;
+        }
+
+        .stand-stats div span {
+            color: #ffd700;
+            font-size: 1.8rem;
+            margin-right: 8px;
+            filter: drop-shadow(0 0 8px gold);
+        }
+
+        /* КНОПКИ — «Позы» с драматизмом */
+        .pose-btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin: 30px 0 15px;
+        }
+
+        .pose-btn {
+            font-family: 'Bangers', cursive;
+            background: linear-gradient(145deg, #26122e, #170a1d);
+            border: 3px solid #b8860b;
+            color: #f5e56b;
+            padding: 16px 42px;
+            font-size: 2rem;
+            letter-spacing: 3px;
+            border-radius: 80px 12px 80px 12px;
+            box-shadow: 0 10px 0 #3d1f4a, 0 15px 30px rgba(0,0,0,0.7);
+            transition: 0.08s linear;
+            text-transform: uppercase;
+            cursor: pointer;
+            transform: skewX(-8deg) scale(1);
+            text-shadow: 3px 3px 0 #1f0a26;
+            flex: 0 1 auto;
+            min-width: 160px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pose-btn::before {
+            content: '⭐';
+            position: absolute;
+            left: -20px;
+            top: -20px;
+            font-size: 40px;
+            opacity: 0.2;
+            transform: rotate(20deg);
+        }
+
+        .pose-btn:hover {
+            transform: skewX(-8deg) scale(1.06) translateY(-5px);
+            background: #3a1d47;
+            border-color: #ffd700;
+            box-shadow: 0 8px 0 #5a2a6b, 0 20px 40px #ffbb33;
+            color: #fff8c0;
+        }
+
+        .pose-btn:active {
+            transform: skewX(-8deg) scale(0.95) translateY(8px);
+            box-shadow: 0 3px 0 #3d1f4a;
+        }
+
+        /* Ссылки — как «Стенды-союзники» */
+        .stand-ally-links {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .stand-ally-links a {
+            font-family: 'Bangers', cursive;
+            font-size: 1.9rem;
+            color: #f5e56b;
+            text-decoration: none;
+            background: linear-gradient(135deg, #1d0d24, #2b1333);
+            padding: 8px 35px;
+            border-radius: 60px 8px 60px 8px;
+            border: 2px solid #b8860b;
+            transition: 0.25s ease;
+            transform: rotate(-2deg) scale(1);
+            box-shadow: 0 8px 0 #2e1538;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px #b8860b;
+        }
+
+        .stand-ally-links a:hover {
+            background: #3d1f4a;
+            border-color: #ffd700;
+            transform: rotate(0deg) scale(1.12);
+            color: #fff5b0;
+            box-shadow: 0 8px 0 #5f2b70, 0 0 40px #ffbb33;
+        }
+
+        /* Футер — «Золотая печать» */
+        .golden-footer {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            border-top: 3px solid #4a1f5a;
+            padding-top: 25px;
+            font-size: 1.3rem;
+            color: #b8860b;
+            letter-spacing: 8px;
+        }
+
+        .golden-footer span {
+            font-family: 'Bangers', cursive;
+            color: #f5e56b;
+            font-size: 2rem;
+            text-shadow: 0 0 20px #ffaa33;
+        }
+
+        .golden-footer .small-copyright {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            color: #7a4b7a;
+            letter-spacing: 3px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 800px) {
+            .golden-stand { padding: 30px 20px; }
+            .jojo-master-title { font-size: 3.6rem; }
+            .pose-btn { font-size: 1.6rem; padding: 14px 28px; min-width: 130px; }
+            .stand-content { font-size: 1.1rem; padding: 25px 18px; }
+            .stand-ally-links a { font-size: 1.4rem; padding: 6px 22px; }
+        }
+
+        @media (max-width: 500px) {
+            .jojo-master-title { font-size: 2.4rem; letter-spacing: 3px; }
+            .crown-line .sub-pose { font-size: 1.1rem; padding: 3px 16px; }
+            .pose-btn { font-size: 1.3rem; padding: 12px 20px; min-width: 100px; }
+            .stand-stats { flex-direction: column; gap: 8px; }
+        }
+
+        /* Декоративный блеск */
+        .glow-star {
+            animation: glowPulse 2s infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            0% { filter: drop-shadow(0 0 5px gold); }
+            100% { filter: drop-shadow(0 0 25px #ff8800) drop-shadow(0 0 50px #ff5500); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="golden-stand">
+        <!-- Верхняя декоративная часть -->
+        <div class="crown-line">
+            <span class="star-deco glow-star">✦</span>
+            <span class="sub-pose">⚡ ЗОЛОТОЙ СТЕНД ⚡</span>
+            <span class="star-deco glow-star" style="animation-delay: 0.5s;">★</span>
+        </div>
+
+        <!-- ГЛАВНЫЙ ЗАГОЛОВОК -->
+        <h1 class="jojo-master-title">
+            <span>J</span><span>o</span><span>J</span><span>o</span>
+            <span style="display:inline-block; margin:0 10px; color:#ffd700; text-shadow:0 0 30px gold;">✧</span>
+            <span>B</span><span>i</span><span>z</span><span>a</span><span>r</span><span>r</span><span>e</span>
+        </h1>
+
+        <!-- Манга-линия с бриллиантами -->
+        <div class="manga-diamond-line"></div>
+
+        <!-- ОСНОВНОЙ БЛОК С СОДЕРЖАНИЕМ (шикарный) -->
+        <div class="stand-content">
+            <p style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <span class="stand-icon-big">⭐ СТЕНД</span>
+                <span style="font-size: 1.8rem; font-family: 'Bangers', cursive; color: #f5c542;">【ＳＴＡＲ ＰＬＡＴＩＮＵＭ】</span>
+            </p>
+
+            <p style="margin-top: 18px; font-size: 1.3rem;">
+                <span style="font-family: 'Bangers', cursive; font-size: 2rem; color: #f5c542; margin-right: 12px;">⏤</span>
+                «Этот шаблон — воплощение <strong class="highlight-gold">JoJo's Bizarre Adventure</strong> в его самой роскошной форме.
+                Золото, фиолетовый, драматичные позы и звёздная магия.
+                Каждый элемент дышит стилем <strong style="color:#ffd966;">Hirohiko Araki</strong>.»
+            </p>
+
+            <!-- Статистика "Стенда" -->
+            <div class="stand-stats">
+                <div><span>⚡</span> Сила: A</div>
+                <div><span>⚡</span> Скорость: A</div>
+                <div><span>⚡</span> Дальность: C</div>
+                <div><span>⚡</span> Точность: A</div>
+                <div><span>⚡</span> Потенциал: A</div>
+            </div>
+
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px;">
+                <span style="background: #1f0a2a; padding: 5px 25px; border-radius: 30px; border-left: 6px solid #f5c542; font-size: 1.2rem; box-shadow: 0 0 20px rgba(255,215,0,0.1);">
+                    💥 <span style="color: #fae57a; font-weight: bold;">ORA ORA ORA</span>
+                </span>
+                <span style="background: #1f0a2a; padding: 5px 25px; border-radius: 30px; border-right: 6px solid #f5c542; font-size: 1.2rem; box-shadow: 0 0 20px rgba(255,215,0,0.1);">
+                    <span style="color: #fae57a; font-weight: bold;">MUDA MUDA</span> 💥
+                </span>
+                <span style="background: #1f0a2a; padding: 5px 25px; border-radius: 30px; border-left: 6px solid #b8860b; font-size: 1.2rem;">
+                    ✦ <span style="color: #fae57a;">WRYYYYY</span> ✦
+                </span>
+            </div>
+
+            <p style="margin-top: 25px; font-style: italic; border-top: 2px solid #6a2a7a; padding-top: 20px; color: #d6b0e0; font-size: 1.2rem; text-shadow: 0 0 15px #b8860b;">
+                ✦ «Величайшая сила — это не просто мощь, а стиль, с которым ты её применяешь.» ✦
+            </p>
+        </div>
+
+        <!-- ГРУППА КНОПОК (Позы) -->
+        <div class="pose-btn-group">
+            <button class="pose-btn">⚡ ПОЗА</button>
+            <button class="pose-btn">⭐ СТЕНД</button>
+            <button class="pose-btn">🔥 УДАР</button>
+        </div>
+
+        <!-- ССЫЛКИ (Стенды-союзники) -->
+        <div class="stand-ally-links">
+            <a href="#">✦ Twitter</a>
+            <a href="#">✦ Instagram</a>
+            <a href="#">✦ YouTube</a>
+            <a href="#">✦ TikTok</a>
+        </div>
+
+        <!-- ФУТЕР — ЗОЛОТАЯ ПЕЧАТЬ -->
+        <div class="golden-footer">
+            <span>★</span>
+            <span>ＪｏＪｏ</span>
+            <span>★</span>
+            <span>Ｂｉｚａｒｒｅ</span>
+            <span>★</span>
+            <span class="small-copyright">✦ 2026 ✦</span>
+        </div>
+        <div style="text-align: center; color: #5a2a6a; font-size: 0.9rem; margin-top: 5px; letter-spacing: 4px; border-top: 1px solid #2a1433; padding-top: 12px;">
+            ⚡ Шаблон в стиле JoJo — роскошное издание ⚡
+        </div>
+    </div>
+
+</body>
+</html>
