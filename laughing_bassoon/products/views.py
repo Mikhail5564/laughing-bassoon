@@ -10,9 +10,8 @@ def create_product(request):
         count = request.POST.get('count')
         price = request.POST.get('price')
         products.append(Product(name=name, description=description, count=count, price=price))
-        print(products)
         return redirect("views_products")
 
 
 def views_products(request):
-    return render(request, 'views_products.html' , context={'products': products})
+    return render(request, 'views.html' , context={'products': products})
