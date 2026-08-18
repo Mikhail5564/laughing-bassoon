@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .utils import Product, products
+from .utils import Product, products, TOTAL_TICKETS, members
 
 def create_product(request):
     if request.method == "GET":
@@ -24,3 +24,11 @@ def views_product(request):
             res = item
             break
     return render(request, 'view_product.html', context={'product': res})
+
+
+
+
+def tickets(request):
+    ticket_used = TOTAL_TICKETS - len(members)
+    if request.method == "GET":
+        return render(request, 'tickets.html', context={"ticket_used": ticket_used,"total_tickets": TOTAL_TICKETS})

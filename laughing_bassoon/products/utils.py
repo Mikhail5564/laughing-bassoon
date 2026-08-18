@@ -10,3 +10,16 @@ class Product:
 
 
 products: list[Product] = []
+
+
+TOTAL_TICKETS = 100
+
+@dataclass
+class Member:
+    first_name: str
+    last_name: str
+    age: int
+
+
+members: list[Member] = []
+
