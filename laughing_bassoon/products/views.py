@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .utils import Product, products, TOTAL_TICKETS, members
+from .utils import Product, products, TOTAL_TICKETS, members, Member
+
 
 def create_product(request):
     if request.method == "GET":
@@ -14,7 +15,7 @@ def create_product(request):
 
 
 def views_products(request):
-    return render(request, 'views.html' , context={'products': products})
+    return render(request, 'views.html', context={'products': products})
 
 
 def views_product(request):
@@ -26,9 +27,19 @@ def views_product(request):
     return render(request, 'view_product.html', context={'product': res})
 
 
-
-
 def tickets(request):
     ticket_used = TOTAL_TICKETS - len(members)
     if request.method == "GET":
-        return render(request, 'tickets.html', context={"ticket_used": ticket_used,"total_tickets": TOTAL_TICKETS})
+        return render(request, 'tickets.html', context={"ticket_used": ticket_used,
+                                                        "total_tickets": TOTAL_TICKETS})
+    else:
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        age = request.POST.get('age')
+        print(first_name, last_name, age)
+        if ticket_used != 0:
+            members.append(Member(first_name=first_name, last_name=last_name, age=age))
+        return redirect('tickets')
+
+def members_view(request):
+    return render(request, 'members_view.html', context={'members': members})
