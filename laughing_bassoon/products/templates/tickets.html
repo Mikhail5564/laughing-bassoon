@@ -228,7 +228,7 @@
     <!-- Форма регистрации -->
     <form method="post" action="">
         {% csrf_token %}
-
+        <p style="color: red">{{error}}</p>
         <div class="form-group">
             <label for="id_first_name">Имя</label>
             <input type="text" id="id_first_name" name="first_name" placeholder="Алексей" required />

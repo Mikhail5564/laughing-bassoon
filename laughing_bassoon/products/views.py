@@ -36,10 +36,16 @@ def tickets(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         age = request.POST.get('age')
-        print(first_name, last_name, age)
         if ticket_used != 0:
             members.append(Member(first_name=first_name, last_name=last_name, age=age))
-        return redirect('tickets')
+            return redirect('members')
+        else:
+            return render(request, 'tickets.html', context={
+                "ticket_used": ticket_used,
+                "total_tickets": TOTAL_TICKETS,
+                "error": "ВСЕ БИЛЕТЫ ПРОДАНЫ"
+            })
+
 
 def members_view(request):
     return render(request, 'members_view.html', context={'members': members})
