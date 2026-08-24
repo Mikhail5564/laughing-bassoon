@@ -83,7 +83,9 @@
                 <li class="member-item">
                     <div class="member-info">
                         <span class="member-name">
+                            <a href="{% url 'licenses' %}?id={{ member.id }}">
                             {{ member.first_name }} {{ member.last_name }}
+                            </a>
                         </span>
                     </div>
                     <span class="member-age">

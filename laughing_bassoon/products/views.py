@@ -51,3 +51,8 @@ def tickets(request):
 
 def members_view(request):
     return render(request, 'members_view.html', context={'members': members})
+
+def licenses(request):
+    id = request.GET.get('id')
+    print(id)
+    return render(request, 'licenses.html')
