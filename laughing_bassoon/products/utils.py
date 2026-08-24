@@ -16,6 +16,7 @@ TOTAL_TICKETS = 100
 
 @dataclass
 class Member:
+    id: int
     first_name: str
     last_name: str
     age: int

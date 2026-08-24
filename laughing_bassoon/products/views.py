@@ -1,3 +1,5 @@
+import uuid
+
 from django.shortcuts import render, redirect
 from .utils import Product, products, TOTAL_TICKETS, members, Member
 
@@ -37,7 +39,7 @@ def tickets(request):
         last_name = request.POST.get('last_name')
         age = request.POST.get('age')
         if ticket_used != 0:
-            members.append(Member(first_name=first_name, last_name=last_name, age=age))
+            members.append(Member(first_name=first_name, last_name=last_name, age=age, id=uuid.uuid4().int))
             return redirect('members')
         else:
             return render(request, 'tickets.html', context={
