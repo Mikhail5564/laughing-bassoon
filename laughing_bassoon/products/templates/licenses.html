@@ -1,237 +1,122 @@
+<!-- member_form.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Карточка участника</title>
+    <title>Редактирование участника</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
             box-sizing: border-box;
         }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 20px;
-        }
-
-        .member-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            padding: 32px 40px 28px;
-            width: 420px;
-            max-width: 100%;
-            transition: box-shadow 0.2s;
-        }
-
-        .member-card:hover {
-            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.12);
-        }
-
-        .field {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .field:last-of-type {
-            border-bottom: none;
-        }
-
-        .field-label {
-            font-size: 15px;
-            color: #8e8e93;
-            width: 100px;
-            flex-shrink: 0;
-            font-weight: 400;
-            letter-spacing: 0.3px;
-        }
-
-        .field-value {
-            font-size: 16px;
-            color: #1c1c1e;
-            font-weight: 500;
-            padding: 4px 0;
-            flex: 1;
-        }
-
-        .field-value.editable {
-            color: #007aff;
-            background: transparent;
-            border: none;
-            font-size: 16px;
-            font-weight: 500;
-            font-family: inherit;
-            padding: 4px 0;
-            width: 100%;
+        input:focus {
+            border-color: #4CAF50;
             outline: none;
-            border-bottom: 1.5px dashed transparent;
-            transition: border-color 0.2s;
+            box-shadow: 0 0 5px rgba(76,175,80,0.3);
         }
-
-        .field-value.editable:hover {
-            border-bottom-color: #007aff40;
-        }
-
-        .field-value.editable:focus {
-            border-bottom-color: #007aff;
-        }
-
-        .editable-badge {
-            font-size: 12px;
-            color: #8e8e93;
-            background: #f2f2f7;
-            padding: 2px 10px;
-            border-radius: 12px;
-            margin-left: 12px;
-            font-weight: 400;
-            letter-spacing: 0.2px;
-            white-space: nowrap;
-        }
-
         .actions {
             display: flex;
-            justify-content: flex-end;
-            gap: 16px;
-            margin-top: 24px;
-            padding-top: 20px;
-            border-top: 1px solid #e5e5ea;
+            gap: 10px;
+            margin-top: 25px;
         }
-
         .btn {
-            padding: 10px 28px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 500;
+            padding: 10px 25px;
             border: none;
+            border-radius: 4px;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
-            letter-spacing: 0.3px;
+            transition: background 0.3s;
         }
-
         .btn-save {
-            background: #007aff;
+            background: #4CAF50;
             color: white;
         }
-
         .btn-save:hover {
-            background: #0066d9;
-            transform: scale(1.02);
+            background: #45a049;
         }
-
-        .btn-save:active {
-            transform: scale(0.98);
-        }
-
         .btn-cancel {
-            background: transparent;
-            color: #8e8e93;
-            border: 1px solid #e5e5ea;
+            background: #f44336;
+            color: white;
         }
-
         .btn-cancel:hover {
-            background: #f8f8f8;
-            border-color: #d1d1d6;
+            background: #d32f2f;
         }
-
-        .btn-cancel:active {
-            background: #f0f0f0;
-        }
-
-        @media (max-width: 480px) {
-            .member-card {
-                padding: 20px;
-            }
-
-            .field {
-                flex-wrap: wrap;
-                gap: 4px 0;
-            }
-
-            .field-label {
-                width: 100%;
-                font-size: 13px;
-                color: #8e8e93;
-            }
-
-            .field-value {
-                font-size: 15px;
-                width: 100%;
-            }
-
-            .editable-badge {
-                margin-left: 0;
-                font-size: 11px;
-            }
-
-            .actions {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-                text-align: center;
-                padding: 12px;
-            }
-        }
-
-        /* Для отображения как на скриншоте — заголовки без жирности */
-        .field-label {
-            font-weight: 400;
-        }
-
-        /* Специально для "Редактируемые" в углу */
-        .edit-indicator {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .edit-indicator .editable-badge {
-            background: #e8f0fe;
-            color: #007aff;
+        .error-message {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
+    <div class="form-container">
+        <h2>Редактирование участника</h2>
 
-    <div class="member-card">
-        <!-- Имя -->
-        <div class="field">
-            <span class="field-label">имя</span>
-            <span class="field-value">{{ member.first_name }}</span>
-            <span class="editable-badge">Редактируемые</span>
-        </div>
+        <form method="post" action="">
+            {% csrf_token %}
 
-        <!-- Фамилия -->
-        <div class="field">
-            <span class="field-label">фамилия</span>
-            <span class="field-value">{{ member.last_name }}</span>
-            <span class="editable-badge">Редактируемые</span>
-        </div>
+            <div class="form-group">
+                <label for="first_name">Имя:</label>
+                <input type="text" id="first_name" name="first_name"
+                       value="{{ member.first_name|default:'' }}" required>
+            </div>
 
-        <!-- Возраст -->
-        <div class="field">
-            <span class="field-label">Возраст</span>
-            <span class="field-value">{{ member.age }}</span>
-            <span class="editable-badge">Редактируемые</span>
-        </div>
+            <div class="form-group">
+                <label for="last_name">Фамилия:</label>
+                <input type="text" id="last_name" name="last_name"
+                       value="{{ member.last_name|default:'' }}" required>
+            </div>
 
-        <!-- Кнопки действий -->
-        <div class="actions">
-            <button class="btn btn-save">сохранить изменения</button>
-            <button class="btn btn-cancel">удалить пользователя</button>
-        </div>
+            <div class="form-group">
+                <label for="age">Возраст:</label>
+                <input type="number" id="age" name="age"
+                       value="{{ member.age|default:'' }}"
+                       min="0" max="150" required>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn btn-save">Сохранить</button>
+                <a href="{% url 'members' %}" class="btn btn-cancel">Отменить</a>
+                <a href="{% url 'delete_member' %}?id={{ member.id }}" class="btn btn-cancel">Удалить</a>
+            </div>
+        </form>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
-
 </body>
 </html>

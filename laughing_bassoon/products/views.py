@@ -53,6 +53,20 @@ def members_view(request):
     return render(request, 'members_view.html', context={'members': members})
 
 def licenses(request):
-    id = request.GET.get('id')
+    uid = None
+    id = int(request.GET.get('id'))
     print(id)
-    return render(request, 'licenses.html')
+    for item in members:
+        if id == item.id:
+            uid = item
+            break
+    return render(request, 'licenses.html', context={'member': uid})
+
+
+def delete_member(request):
+    id = int(request.GET.get('id'))
+    print(id)
+    for item in members:
+        if id == item.id:
+            members.remove(item)
+    return redirect("members")
