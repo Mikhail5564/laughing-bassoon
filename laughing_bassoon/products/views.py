@@ -52,20 +52,32 @@ def tickets(request):
 def members_view(request):
     return render(request, 'members_view.html', context={'members': members})
 
+
 def licenses(request):
-    uid = None
-    id = int(request.GET.get('id'))
-    print(id)
-    for item in members:
-        if id == item.id:
-            uid = item
-            break
-    return render(request, 'licenses.html', context={'member': uid})
+    if request.method == "GET":
+        uid = None
+        id = int(request.GET.get('id'))
+        for item in members:
+            if id == item.id:
+                uid = item
+                break
+        return render(request, 'licenses.html', context={'member': uid})
+    else:
+        id = int(request.GET.get('id'))
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        age = int(request.POST.get('age'))
+        for item in members:
+            if id == item.id:
+                item.first_name = first_name
+                item.last_name = last_name
+                item.age = age
+                break
+        return redirect('members')
 
 
 def delete_member(request):
     id = int(request.GET.get('id'))
-    print(id)
     for item in members:
         if id == item.id:
             members.remove(item)
