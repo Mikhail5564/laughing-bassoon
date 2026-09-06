@@ -24,3 +24,12 @@ class Member:
 
 members: list[Member] = []
 
+
+ivan_votes = 6
+mikhail_votes = 4
+
+
+def percent(golos, total_golos):
+    return (golos / total_golos) * 100
+
+

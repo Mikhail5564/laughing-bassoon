@@ -1,7 +1,7 @@
 import uuid
 
 from django.shortcuts import render, redirect
-from .utils import Product, products, TOTAL_TICKETS, members, Member
+from .utils import Product, products, TOTAL_TICKETS, members, Member, ivan_votes, mikhail_votes, percent
 
 
 def create_product(request):
@@ -82,3 +82,12 @@ def delete_member(request):
         if id == item.id:
             members.remove(item)
     return redirect("members")
+
+
+def choice_lider(request):
+    total_votes = mikhail_votes + ivan_votes
+    return render(request, 'choice_lider.html', context={"ivan_votes": ivan_votes,
+                                                         "mikhail_votes": mikhail_votes,
+                                                         "total_votes": total_votes,
+                                                         "ivan_percent": percent(ivan_votes, total_votes),
+                                                         "mikhail_percent": percent(mikhail_votes, total_votes)})
